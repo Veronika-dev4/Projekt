@@ -4,18 +4,7 @@ projekt_1.py: první projekt do Engeto Online Python Akademie
 author: Veronika Semeradova
 email: semeradova.veronika@gmail.com
 """
-user = ("bob", "ann", "mike", "liz")
-password = ("123", "pass123", "password123", "pass123")
-uzivatel = {"bob": "123", "ann": "pass123", "mike": "password123", "liz": "pass123"}
-user_1 = input("user: ")
-password_1 = input("password: ")
-print("-" * 40)
-if uzivatel.get(user_1) == password_1:
-    print("Welcome to the app,", user_1, "\nWe have 3 texts to be analyzed.")
-    print("-" * 40)
-else:
-    print("Unregistered user, terminating the program...")
-    exit()
+
 TEXTS = ['''
 Situated about 10 miles west of Kemmerer,
 Fossil Butte is a ruggedly impressive
@@ -43,21 +32,42 @@ other freshwater genera and herring similar to those
 in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
-text_1 = input("Enter a number btw. 1 and 3 to select: ")
+
+
+user = {"bob": "123", "ann": "pass123", "mike": "password123", "liz": "pass123"}
+user_1 = input("user: ")
+password_1 = input("password: ")
+print("-" * 40)
+if user.get(user_1) == password_1:
+    print(f"Welcome to the app, {user_1}\nWe have {len(TEXTS)} texts to be analyzed.")
+    print("-" * 40)
+else:
+    print("Unregistered user, terminating the program...")
+    exit()
+
+if len(TEXTS) == 0:
+    print("0 texts to be analyzed.")
+    exit()
+
+text_1 = input(f"Enter a number btw. 1 and {len(TEXTS)} to select: ")
 print("-" * 40)
 if not(text_1.isnumeric()):
     print("Wrong character.")
     exit()
-elif int(text_1)>3:
+elif int(text_1)>3 or int(text_1)<1:
     print("Wrong number.")
     exit()
-split_text = TEXTS[int(text_1)-1].split()
+
+clean_text = ''.join(c for c in TEXTS[int(text_1)-1] if c.isalnum() or c.isspace())
+
+split_text = clean_text.split()
 number = 0
 words = 0
 upper = 0
 allupper = 0
 alllower = 0
 suma_all = 0
+
 for idx in range(len(split_text)):
     if split_text[idx].isnumeric():
         number = number + 1
@@ -66,8 +76,9 @@ for idx in range(len(split_text)):
         upper = upper + 1
     if split_text[idx].isupper():
         allupper = allupper + 1
-    if split_text[idx].islower:
+    if split_text[idx].islower():
         alllower = alllower + 1
+
 words = len(split_text)
 print("There are", words, "words in the selected text.")
 print("There are", upper, "titlecase words.")
@@ -78,19 +89,21 @@ print("The sum of all the numbers", suma_all,".")
 print("-" * 40)
 print("LEN|", "   ", "OCCURENCES", "   ", "|NR.")
 print("-" * 40)
+
 dictionary_words = split_text
 length_words = {word: len(word) for word in dictionary_words}
-new = set(length_words.values())
+unique_lenghts = set(length_words.values())
 dict = {}
-for val in new: 
+for val in unique_lenghts: 
     dict[val] = 0
 for word in split_text:
     dict[len(word)] +=1
-print(length_words)
-print(dict)
+
+
 for item in dict:
     print(f"{item:2} |", end="")
     for i in range(dict[item]):
       print("*", end="")
-    print(" ", dict[item])
+    print(f"{"|":>{21-dict[item]}s}",dict[item])
+    
 
