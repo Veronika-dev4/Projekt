@@ -94,16 +94,16 @@ dictionary_words = split_text
 length_words = {word: len(word) for word in dictionary_words}
 unique_lenghts = set(length_words.values())
 dict = {}
-for val in unique_lenghts: 
-    dict[val] = 0
+for value in unique_lenghts: 
+    dict[value] = 0
 for word in split_text:
     dict[len(word)] +=1
 
 
-for item in dict:
-    print(f"{item:2} |", end="")
-    for i in range(dict[item]):
+for word_lenghts in dict:
+    print(f"{word_lenghts:2} |", end="")
+    for i in range(dict[word_lenghts]):
       print("*", end="")
-    print(f"{"|":>{21-dict[item]}s}",dict[item])
+    print(f"{"|":>{21-dict[word_lenghts]}s}",dict[word_lenghts])
     
 
